@@ -1,9 +1,9 @@
 #include <enet/enet.h>
-#include <stdio.h>
+#include <print>
 
 int main ()
 {
-	printf("%s\n", "...testing...");
+	std::print("{0}\n", "...testing...");
 
 	return 0;
 }
