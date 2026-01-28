@@ -3,3 +3,7 @@
 
 # Build files
 build/
+
+# Shell scripts
+*.sh
+*.zsh
