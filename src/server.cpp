@@ -48,6 +48,50 @@ int main ()
 		address.port
 	);
 
+	// -------------------------------------------------------------------------
+	// Server Loop
+	// -------------------------------------------------------------------------
+
+	ENetEvent event;
+	ENetPeer *client;
+
+	// Wait up to 10 milliseconds for an event
+	while (enet_host_service(server, &event, 10) > 0)
+	{
+		// Handle events
+		switch (event.type)
+		{
+		case ENET_EVENT_TYPE_CONNECT:
+			std::print("A new client connected from {0}:{1}.\n",
+				event.peer -> address.host,
+				event.peer -> address.port);
+
+			// Store client info here
+			client = event.peer;
+
+			break;
+
+		case ENET_EVENT_TYPE_RECEIVE:
+			std::print("A packet of length {0} containing {1} was received "
+					"from {2} on channel {3}.\n",
+                event.packet -> dataLength,
+                event.packet -> data,
+                event.peer -> data,
+                event.channelID);
+ 
+        	// Clean up the packet after using it
+        	enet_packet_destroy (event.packet);
+        
+        	break;
+
+        case ENET_EVENT_TYPE_DISCONNECT:
+        	std::print("{0} disconnected.\n", event.peer -> data);
+ 
+        	// Reset the peer's client information
+        	event.peer -> data = NULL;
+
+		}
+	}
 
 	// Deinitialize enet
 	enet_deinitialize();
