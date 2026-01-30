@@ -55,8 +55,8 @@ int main ()
 	ENetEvent event;
 	ENetPeer *client;
 
-	// Wait up to 10 milliseconds for an event
-	while (enet_host_service(server, &event, 10) > 0)
+	// Wait up to 1000 milliseconds for an event
+	while (enet_host_service(server, &event, 1000) > 0)
 	{
 		// Handle events
 		switch (event.type)
@@ -72,12 +72,11 @@ int main ()
 			break;
 
 		case ENET_EVENT_TYPE_RECEIVE:
-			std::print("A packet of length {0} containing {1} was received "
-					"from {2} on channel {3}.\n",
-                event.packet -> dataLength,
-                event.packet -> data,
-                event.peer -> data,
-                event.channelID);
+			// std::print("A packet of length {0} containing {1} was received from {2} on channel {3}.\n",
+            //     event.packet -> dataLength,
+            //     event.packet -> data,
+            //     event.peer -> data,
+            //     event.channelID);
  
         	// Clean up the packet after using it
         	enet_packet_destroy (event.packet);
